@@ -1,0 +1,45 @@
+A NPT simulation for common production-level simulations
+ &cntrl
+    imin=0,         ! No minimization
+    irest=1,        ! This IS a restart of an old MD simulation
+    ntx=5,          ! So our inpcrd file has velocities
+
+    ! Temperature control
+    ntt=3,          ! Langevin dynamics
+    gamma_ln=1.0,   ! Friction coefficient (ps^-1)
+    temp0=300,      ! Target temperature
+
+    ! Potential energy control
+    cut=8.0,        ! Nonbonded cutoff, in Angstroms
+
+    ! MD settings
+    nstlim=2500000, ! 5000K steps, 10 ns total
+    dt=0.004,       ! time step (ps)
+
+    ! SHAKE
+    ntc=2,          ! Constrain bonds containing hydrogen
+    ntf=2,          ! Do not calculate forces of bonds containing hydrogen
+
+    ! Control how often information is printed
+    ntpr=250000,    ! Print energies every 500k steps
+    ntwx=25000,     ! Print coordinates every 25k steps (50ps) to the trajectory
+    ntwr=2500000,   ! Print a restart file every 5000K steps (can be less frequent)
+    ntxo=2,         ! Restart file format =1 ASCII, =2 NetCDF format
+    ioutfm=1,       ! Trajectory file format =1 NetCDF format (always do this!), =2 ASCII
+
+    ! Wrap coordinates when printing them to the same unit cell
+    iwrap=1,        ! =0 wrap off, =1 wrap on   
+
+    ! Constant pressure control.
+    ntp=1,          ! =1 isotropic, =2 anisotropic, =3 semi-isotropic w/ surften
+    barostat=2,     ! Monte Carlo barostat, =1 Berenson 
+    ntb=2,          ! =2, Use constant pressure periodic boundary; =1 constant volumn
+    pres0=1.0,      ! Target external pressure, in bar
+    taup=1.0,	    ! Pressure relaxation time (ps)
+
+    ! Restrain the solute
+    ntr=1,                       ! turn on restraint
+    restraint_wt=3,              ! harmonic restraints (10 kcal/molA²)
+    restraintmask=':1-548&!@H=', ! protein heavy atoms
+ /
+
